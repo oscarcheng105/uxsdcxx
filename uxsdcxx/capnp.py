@@ -224,7 +224,7 @@ def load_fn_from_element(e: UxsdElement) -> str:
 	out += "\tstd::function<void(const char *)> report_error = [filename, &out, &stack](const char *message){\n"
 	out += "\t\tstd::stringstream msg;\n"
 	out += "\t\tmsg << message << std::endl;\n"
-	out += "\t\tmsg << \"Error occured at \";\n"
+	out += "\t\tmsg << \"Error occurred at \";\n"
 	out += "\t\tfor(size_t i = 0; i < stack.size(); ++i) {\n"
 	out += "\t\t\tmsg << stack[i].first << \"[\" << stack[i].second << \"]\";\n"
 	out += "\t\t\tif(i+1 < stack.size()) {\n"
@@ -786,7 +786,7 @@ def render_impl_header_file(schema: UxsdSchema, cmdline: str, capnp_file_name: s
 	out += "\tvoid finish_write() override {}\n"
 	out += "\tvoid error_encountered(const char * file, int line, const char *message) override {\n"
 	out += "\t\tstd::stringstream msg;"
-	out += "\t\tmsg << message << \" occured at file: \" << file << \" line: \" << line;\n"
+	out += "\t\tmsg << message << \" occurred at file: \" << file << \" line: \" << line;\n"
 	out += "\t\tthrow std::runtime_error(msg.str());\n"
 	out += "\t}\n"
 
