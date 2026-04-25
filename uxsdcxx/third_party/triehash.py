@@ -118,10 +118,17 @@ class Trie:
 
 def gen_prelude() -> str:
 	out = ""
+	out += "#ifdef _MSC_VER\n"
+	out += "typedef __declspec(align(1)) const uint32_t triehash_uu32;\n"
+	out += "typedef __declspec(align(1)) const uint64_t triehash_uu64;\n"
+	out += "#else\n"
 	out += "typedef const uint32_t __attribute__((aligned(1))) triehash_uu32;\n"
 	out += "typedef const uint64_t __attribute__((aligned(1))) triehash_uu64;\n"
+	out += "#endif\n"
+	out += "#ifndef _MSC_VER\n"
 	out += "static_assert(alignof(triehash_uu32) == 1, \"Unaligned 32-bit access not found.\");\n"
 	out += "static_assert(alignof(triehash_uu64) == 1, \"Unaligned 64-bit access not found.\");\n"
+	out += "#endif\n"
 	out += "#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__\n"
 	out += "#define onechar(c, s, l) (((uint64_t)(c)) << (s))\n"
 	out += "#else\n"
